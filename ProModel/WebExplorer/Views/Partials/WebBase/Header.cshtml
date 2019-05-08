@@ -1,0 +1,61 @@
+﻿<!-- START: header -->
+
+@using Umbraco.Web
+@using Umbraco.Web.Models
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@{
+//var site = Model.Root();
+//var selection = site.Children.Where(x => x.IsVisible());
+}
+
+
+<link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+<link rel="stylesheet" href="~/css/styles-merged.css">
+<link rel="stylesheet" href="~/css/style.min.css">
+<link rel="stylesheet" href="~/css/custom.css">
+<!-- START: header -->
+
+<div class="probootstrap-loader"></div>
+<header role="banner" class="probootstrap-header">
+    <div class="container">
+        <a href="index.html" class="probootstrap-logo">Explorer<span>.</span></a>
+
+        <a href="#" class="probootstrap-burger-menu visible-xs"><i>Menu</i></a>
+        <div class="mobile-menu-overlay"></div>
+        <nav role="navigation" class="probootstrap-nav hidden-xs">
+            <ul class="probootstrap-main-nav">
+                <li class="active"><a href="/home/">Home</a></li>
+                <li><a href="/about/">About</a></li>
+                <li><a href="/contact/">Contact</a></li>
+                <li><a href="/login/">Login</a></li>
+                
+                @*@foreach (var item in selection)
+            {
+                <li>
+                <li class="active"><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+                    <a class="nav-link @(item.IsAncestorOrSelf(Model) ? "nav-link--active" : null)" href="@item.Url">@item.Name</a>
+                </li>
+            }*@
+            </ul>
+            <div class="extra-text visible-xs">
+                <a href="#" class="probootstrap-burger-menu"><i>Menu</i></a>
+                <h5>Address</h5>
+                <p>198 West 21th Street, Suite 721 New York NY 10016</p>
+                <h5>Connect</h5>
+                <ul class="social-buttons">
+                    <li><a href="#"><i class="icon-twitter"></i></a></li>
+                    <li><a href="#"><i class="icon-facebook2"></i></a></li>
+                    <li><a href="#"><i class="icon-instagram2"></i></a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+<!-- END: header -->
+
+<script src="~/scripts/scripts.min.js"></script>
+<script src="~/scripts/main.min.js"></script>
+<script src="~/scripts/custom.js"></script>
