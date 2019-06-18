@@ -1,0 +1,28 @@
+﻿
+@using System.Web.Mvc.Html
+@using Umbraco.Web
+@{
+    Layout = "WebBase.cshtml";
+    ViewBag.Title = "ChangeUsername";
+}
+
+<h2>Change Username</h2>
+<br>
+
+@if (Request.IsAuthenticated)
+{
+
+    <form method="post" action="@Url.Action("ChangeUsername","Profile")">
+        @Html.AntiForgeryToken()
+        New Username:<br>
+        <input type="text" name="newusername" value=""><br><br>
+        Confirm Username:<br>
+        <input type="text" name="confirmusername" value=""><br><br>
+        <input type="submit" value="Submit">
+        @Html.ValidationSummary()
+    </form>
+}
+else
+{
+    Response.Redirect("~/Login");
+}

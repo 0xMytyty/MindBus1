@@ -1,0 +1,127 @@
+﻿@using WebExplorer.Controllers
+@using WebExplorer.Models
+@inherits Umbraco.Web.Mvc.UmbracoViewPage
+@{
+    Layout = "WebBase.cshtml";
+}
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Explorer</title>
+        <meta name="description" content="Explorer Website.">
+        <meta name="keywords" content="The Explorer website.">
+
+        <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+
+        <link href="~/css/styles-merged.css" rel="stylesheet" />
+
+        <link href="~/css/style.min.css" rel="stylesheet" />
+
+        <link href="~/css/custom.css" rel="stylesheet" />
+        <script src="~/scripts/html5shiv.min.js"></script>
+        <script src="~/scripts/vendor/respond.min.js"></script>
+    </head>
+</html>
+    <section class="recent-posts">
+        <div class="container">
+            @*<iframe width="1000" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=&amp;aq=&amp;sll=37.422023,-122.084337&amp;sspn=0.00357,0.008229&amp;ie=UTF8&amp;ll=37.421981,-122.084531&amp;spn=0.001785,0.004115&amp;t=m&amp;z=18&amp;output=embed"></iframe>*@
+            <div class="row">
+                @using (Html.BeginUmbracoForm<ContactEntrySurfaceController>("ContactEntry", FormMethod.Post, "form-horizontal"))
+                {
+                    var contactEntryModel = (ContactEntryModel)ViewBag.contactEntryModel;
+
+                    <div class="col-md-8">
+                        @*<h3>@title</h3>*@
+                        <hr>
+                        @*<p>@entryText</p>*@
+                        <br />
+                        <p id="feedback"></p>
+
+
+                        <form role="form" id="contact-form" name="contact-form" method="post" action="" class="contact-form">
+                            <div class="form-group col-md-6">
+                                <span class="orange">Primeiro nome:</span>
+                                <label class="sr-only" for="exampleInputEmail1">Your Name: *</label>
+                                @Html.TextBoxFor(m => contactEntryModel.NomeCompleto, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group col-md-6">
+                                <span class="orange">Segundo nome:</span>
+                                <label class="sr-only" for="exampleInputEmail1">Email: *</label>
+                                @Html.TextBoxFor(m => contactEntryModel.Email, new { @class = "form-control" })
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="form-group">
+                                <span class="orange">Orçamentoe:</span>
+                                <label class="sr-only" for="exampleInputEmail1">Subject:</label>
+                                @Html.TextBoxFor(m => contactEntryModel.Orcamento, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <span class="orange">Email:</span>
+                                @Html.TextBoxFor(m => contactEntryModel.Requisitos, new { @class = "form-control" })
+                            </div>
+                            <input id="submit-button" type="submit" class="btn btn-lg btn-info" value="Submit">
+                        </form>
+                    </div>
+                }
+                <div class="col-md-4">
+                    @*<h3>@rightTitle</h3>*@
+                    <hr>
+                    @*@rightText*@
+                    <br />
+                    <br />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        function send_special_order() {
+            var data1 = $('#name').val();
+            var data2 = $('#subject').val();
+            var data3 = $('#email').val();
+            var data4 = $('#message').val();
+            $.ajax({
+                type: "POST",
+                url: "send.php",
+                dataType: "json",
+                data: ({ "name": data1, "subject": data2, "email": data3, "message": data4 }),
+                success: function () {
+                },
+                complete: function () {
+                    $('#feedback').append('<p>Thank you for sending us a message. Our specialists will contact you as soon as possible.</p><p>Your message details are:</p>\n\
+                                    <ul>\n\
+                                        <li>Name: <b>' + data1 + '</b></li>\n\
+                                        <li>Email: <b>' + data3 + '</b></li>\n\
+                                        <li>Subject: <b>' + data2 + '</b></li>\n\
+                                        <li>Message: <b>' + data4 + '</b></li>\n\
+                                    </ul>\n\
+                                    <p>If you want to change your information press the button:\n\
+                                    <p><a href="#" id="send-more" class="btn btn-lg btn-info">edit info</a></p>');
+                    $('#contact-form').slideUp();
+                    $('#send-more').click(function (e) {
+                        e.preventDefault()
+                        $('#contact-form').slideDown();
+                        $('#feedback').html('');
+                    });
+                }
+            });
+        }
+        $('#contact-form').submit(function () {
+            send_special_order();
+            return false;
+        });
+        </script>
+
+        <script src="~/scripts/scripts.min.js"></script>
+
+    <script src="~/scripts/main.min.js"></script>
+
+    <script src="~/scripts/custom.js"></script>
+   
+

@@ -1,0 +1,122 @@
+﻿@using System.Web.Mvc.Html
+@using Umbraco.Web
+@using WebExplorer.Controllers
+@using WebExplorer.Models
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<ProfilePageModel>
+
+@{
+    Html.EnableClientValidation();
+
+    Layout = "WebBase.cshtml";
+
+
+
+}
+
+@if (Request.IsAuthenticated)
+{
+
+
+
+        <div class="container" style="padding-top: 60px;">
+            <h1 class="page-header">Change Username</h1>
+
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#username">Username</a></li>
+                <li><a data-toggle="tab" href="#password">Password</a></li>
+                <li><a data-toggle="tab" href="#personal">Personal</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="username">
+                    <h3>Change Username</h3>
+                    @using (Html.BeginUmbracoForm<ProfileSurfaceController>("ChangeUsername", FormMethod.Post, "form-horizontal"))
+                    {
+                        var ChangeUsernameModel = (ChangeUsernameModel)ViewBag.ChangeUsernameModel;
+
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">New Username:</label>
+                            @Html.TextBoxFor(m => ChangeUsernameModel.NewUsername, new { @class = "form-control" })
+                            <label class="col-lg-3 control-label">Confirm Username:</label>
+                        </div>
+                        @Html.TextBoxFor(m => ChangeUsernameModel.ConfirmNewUsername, new { @class = "form-control" })
+                        <input type="submit" value="Save Changes">
+
+                    }
+
+
+                    @Html.ValidationSummary()
+
+                </div>
+
+                <div class="tab-pane" id="password">
+                    <h3>Change Password</h3>
+                    @using (Html.BeginUmbracoForm<ProfileSurfaceController>("ChangePassword", FormMethod.Post, "form-horizontal"))
+                    {
+                        var ChangePasswordModel = (ChangePasswordModel)ViewBag.ChangePasswordModel;
+
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Password:</label>
+                            @Html.TextBoxFor(m => ChangePasswordModel.Password, new { @class = "form-control" })
+                            <label class="col-lg-3 control-label">New Password:</label>
+                            @Html.TextBoxFor(m => ChangePasswordModel.NewPassword, new { @class = "form-control" })
+                            <input type="submit" value="Save Changes">
+                        </div>
+                    }
+
+                    @Html.ValidationSummary()
+
+                </div>
+
+                <div class="tab-pane" id="personal">
+                    <h3>Personal Info</h3>
+                    @using (Html.BeginUmbracoForm<ProfileSurfaceController>
+                        ("PersonData", FormMethod.Post, "form-horizontal"))
+                    {
+
+                        var personModel = Model.Person;
+
+                        <div>
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <div class="text-center">
+                                    <img src="@(personModel?.ImagemUrl)" class="avatar img-circle img-thumbnail" alt="avatar">
+
+
+
+                                    <input type="file" class="text-center center-block well well-sm" name="personModel.ImagemParaCarregar">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label class="col-lg-3 control">Primeiro e Último Nome</label>
+                                @Html.TextBoxFor(m => personModel.Nome, new { @class = "form-control" })
+                                <label class="col-lg-3 control-label">Datade Nascimento</label>
+                                @Html.TextBoxFor(m => personModel.DatadeNascimento, new { @class = "form-control", @id = "date", type = "date" })
+                                <label class="col-lg-3 control-label">Peso(kg)</label>
+                                @Html.TextBoxFor(m => personModel.Peso, new { @class = "form-control", @type = "number" })
+                                <label class="col-lg-3 control-label">Altura(cm)</label>
+                                @Html.TextBoxFor(m => personModel.Altura, new { @class = "form-control", @type = "number" })
+                                <label class="col-lg-3 control-label">Cor do Cabelo</label>
+                                @Html.TextBoxFor(m => personModel.CordoCabelo, new { @class = "form-control", })
+                                <label class="col-lg-3 control-label">Cor dos Olhos</label>
+                                @Html.TextBoxFor(m => personModel.CordeOlhos, new { @class = "form-control" })
+                                <label class="col-lg-3 control-label">Sexo</label>
+                                @*@Html.EnumDropDownListFor(m => personModel.SexoPessoa, new { @class = "form-control" })*@
+                                <br />
+                                <input type="submit" value="Save Changes">
+
+                            </div>
+                        </div>
+                    }
+                    @Html.ValidationSummary()
+                </div>
+            </div>
+        </div>
+
+
+        }
+        else
+        {
+        Response.Redirect("~/home");
+        }
